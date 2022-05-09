@@ -2,11 +2,11 @@ import mealsImg from "../../assets/epic-meal-prep-5.jpg"
 import classes from "./Header.module.css"
 import HeaderCartButton from "./HeaderCartButton";
 
-const Header = props => { 
+const Header = ({onShowCart}) => { 
   return <>
     <header className={classes.header}>
       <h1>React  Meals</h1>
-       <HeaderCartButton/>
+      <HeaderCartButton onShowCart={onShowCart}/>
     </header>
     <div className={classes['main-image']} >
       <img src={mealsImg} alt="food" />
