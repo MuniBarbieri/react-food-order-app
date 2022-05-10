@@ -3,10 +3,10 @@ import CartContext from "./cart-context"
 const CartProvider = props => {
 
   const addItemToCartHandler = item => { }
-  const removeItemFromCartHandler = ide =>{}
+  const removeItemFromCartHandler = id =>{}
 
   const cartContext = {
-    items: [],
+    items: [{amount:22}],
     totalAmount: 0,
     addItem: addItemToCartHandler,
     removeItem:removeItemFromCartHandler
