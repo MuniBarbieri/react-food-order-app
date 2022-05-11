@@ -11,7 +11,6 @@ const CartProvider = props => {
   const cartReducer = (state, action) => {
     switch (action.type) {
       case "ADD_ITEM":
-        console.log("Reducer", action.payload)
         const updatedTotalAmount = state.totalAmount + action.payload.price * action.payload.amount
         return {
           ...state,

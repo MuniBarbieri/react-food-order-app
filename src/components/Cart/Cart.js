@@ -7,14 +7,11 @@ import CartItem from "./CartItem"
 const Cart = ({onHideCart}) => {
 
   const cartCtx = useContext(CartContext)
-  console.log("CartCtx.", cartCtx)
   const totalAmount = cartCtx.totalAmount.toFixed(2)
   const hasItems = cartCtx.items.length > 0;
 
 
-  const cartItemRemoveHandler = (id) => {
-    console.log("QUE ONDA PERRI")
-   }
+  const cartItemRemoveHandler = (id) => {}
   
   const cartItemAddHandler = item =>{}
 
