@@ -7,13 +7,12 @@ import classes from "./HeaderCartButton.module.css"
 const HeaderCartButton = ({ onShowCart }) => {
   const cartCtx = useContext(CartContext)
 
-  console.log(cartCtx)
 
   const numberOfCartItems = cartCtx.items.reduce((currentNumber, item) => {
       return currentNumber + item.amount
-  }, 10)
+  }, 0)
 
-  
+
   return (
     <button
       className={classes.button}

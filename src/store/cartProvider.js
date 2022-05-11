@@ -5,13 +5,14 @@ const CartProvider = props => {
 
   const initialState = {
     items: [],
-    totalAmount:0
+    totalAmount:10
   }
 
-  const cartReducer = (state = initialState, action) => {
+  const cartReducer = (state, action) => {
     switch (action.type) {
       case "ADD_ITEM":
-        const updatedTotalAmount = state.totalAmount + action.item.price * action.item.amount
+        console.log("Reducer", action.payload)
+        const updatedTotalAmount = state.totalAmount + action.payload.price * action.payload.amount
         return {
           ...state,
           items: [...state.items, action.payload],
@@ -25,11 +26,11 @@ const CartProvider = props => {
           })
         }
         default:
-        return state
+        return initialState
     }
   }
 
-  const [cartState, dispatchCartAction]  = useReducer(cartReducer)
+  const [cartState, dispatchCartAction]  = useReducer(cartReducer, initialState)
 
   const addItemToCartHandler = item => { 
     dispatchCartAction({type:"ADD_ITEM", payload: item})
