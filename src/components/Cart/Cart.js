@@ -11,9 +11,13 @@ const Cart = ({onHideCart}) => {
   const hasItems = cartCtx.items.length > 0;
 
 
-  const cartItemRemoveHandler = (id) => {}
+  const cartItemRemoveHandler = (id) => {
+    cartCtx.removeItem(id)
+  }
   
-  const cartItemAddHandler = item =>{}
+  const cartItemAddHandler = item => {
+      cartCtx.addItem(item)
+  }
 
   return (
     <Modal  onHideCart={onHideCart}>
@@ -24,8 +28,8 @@ const Cart = ({onHideCart}) => {
             price={item.price}
             name={item.name}
             amount={item.amount}
-            onRemove={cartItemRemoveHandler}
-            onAdd={cartItemAddHandler}
+            onRemove={()=>cartItemRemoveHandler(item.id)}
+            onAdd={()=>cartItemAddHandler(item)}
         >{item.name}
         </CartItem>)}
     </ul> 

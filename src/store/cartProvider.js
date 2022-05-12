@@ -19,7 +19,7 @@ const CartProvider = props => {
 
         const existingCartItem = state.items[indexOfRepeatedItem]
 
-        let updatedItems
+        let updatedItems;
 
         if (existingCartItem) {
            const updatedItem = {
@@ -38,11 +38,30 @@ const CartProvider = props => {
           totalAmount: updatedTotalAmount
         }
       case "REMOVE_ITEM":
+
+        
+        const indexOfExistingItem = state.items.findIndex(item => {
+          return item.id === action.payload
+        })
+        const repeatedItem = state.items[indexOfExistingItem]
+        const updatedTotalAmounts = state.totalAmount - repeatedItem.price
+
+        let items;
+        if (repeatedItem.amount === 1) {
+          items = state.items.filter((item) => {
+            return item.id !== action.payload
+          })
+        } else {
+          const updatedItem = { ...repeatedItem, amount: repeatedItem.amount - 1 }
+          items = [...state.items]
+          items[indexOfExistingItem] = updatedItem
+        }
+        
+
         return {
           ...state,
-          items: state.items.filter((item,index) => {
-            return index !== action.payload
-          })
+          items: items,
+          totalAmount: updatedTotalAmounts
         }
         default:
         return initialState

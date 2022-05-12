@@ -7,11 +7,14 @@ import classes from "./HeaderCartButton.module.css"
 const HeaderCartButton = ({ onShowCart }) => {
   const cartCtx = useContext(CartContext)
 
-
+  
   const numberOfCartItems = cartCtx.items.reduce((currentNumber, item) => {
+
       return currentNumber + item.amount
   }, 0)
 
+
+  
 
   return (
     <button
