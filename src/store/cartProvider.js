@@ -5,7 +5,7 @@ const CartProvider = props => {
 
   const initialState = {
     items: [],
-    totalAmount:10
+    totalAmount:0
   }
 
   const cartReducer = (state, action) => {
