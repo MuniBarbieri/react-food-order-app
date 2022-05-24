@@ -7,7 +7,9 @@ import Checkout from "./Checkout"
 
 const Cart = ({onHideCart}) => {
 
-  const [ isCheckingout, setIsCheckingout] = useState(false)
+  const [isCheckingout, setIsCheckingout] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [ didSubmit, setDidSubmit] = useState(false)
   const cartCtx = useContext(CartContext)
   const totalAmount = cartCtx.totalAmount.toFixed(2)
   const hasItems = cartCtx.items.length > 0;
@@ -25,6 +27,14 @@ const Cart = ({onHideCart}) => {
     setIsCheckingout(!isCheckingout)
   }
 
+  const submitOrderHandler = async (userData) => {
+    await fetch('https://react-food-app-ab32f-default-rtdb.firebaseio.com/orders.json', { method: 'POST', body: JSON.stringify({ user: userData, orderedItems: cartCtx.items }) })
+    
+    setIsSubmitting(false)
+    setDidSubmit(true)
+    cartCtx.clearCart()
+  }
+
   const modalActions =       <div className={classes.actions}>
         <button
           className={classes['button--alt']}
@@ -35,11 +45,11 @@ const Cart = ({onHideCart}) => {
 
         hasItems && <button className={classes.button} onClick={orderHandler} >Order</button>
         }
-      </div>
+  </div>
+  
 
-  return (
-    <Modal  onHideCart={onHideCart}>
-      <ul  className={classes['cart-items']}>
+  const cartModalContent = <>
+    <ul  className={classes['cart-items']}>
         {cartCtx.items.map((item, i) =>
         <CartItem
             key={i}
@@ -57,12 +67,31 @@ const Cart = ({onHideCart}) => {
       </div>
       {
         isCheckingout &&
-        <Checkout onCancel={ onHideCart}/>
+        <Checkout onCancel={onHideCart} onConfirm={submitOrderHandler}/>
       }
       { !isCheckingout && modalActions}
 
+  </>
+
+  const isSubmittingModalContent = <p>Sending order data...</p>
+  const didSubmitModalContent = <>
+    <p>Susccesfully sent the order!</p>
+     <div className={classes.actions}>
+        <button
+          className={classes.button}
+          onClick={onHideCart}
+        >Close  
+        </button>
+  </div>
+  </>
+  
+  return (
+    <Modal  onHideCart={onHideCart}>
+      {!isSubmitting && !didSubmit &&  cartModalContent}
+      {isSubmitting && isSubmittingModalContent}
+      {!isSubmitting && didSubmit && didSubmitModalContent}
     </Modal>
   )
 }
 
-export default Cart
+export default Cart;

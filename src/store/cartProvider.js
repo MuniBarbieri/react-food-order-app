@@ -63,6 +63,9 @@ const CartProvider = props => {
           items: items,
           totalAmount: updatedTotalAmounts
         }
+      
+      case "CLEAR_CART":
+        return initialState
         default:
         return initialState
     }
@@ -76,12 +79,16 @@ const CartProvider = props => {
   const removeItemFromCartHandler = id => {
     dispatchCartAction({type:"REMOVE_ITEM", payload: id})
   }
+  const clearCartHandler = () => {
+    dispatchCartAction({type:'CLEAR_CART'})
+  }
 
   const cartContext = {
     items: cartState.items,
     totalAmount: cartState.totalAmount,
     addItem: addItemToCartHandler,
-    removeItem:removeItemFromCartHandler
+    removeItem: removeItemFromCartHandler,
+    clearCart: clearCartHandler
   }
 
   return <CartContext.Provider  value={cartContext}>
